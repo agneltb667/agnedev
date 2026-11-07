@@ -794,7 +794,7 @@ html.has-cursor input,html.has-cursor textarea{cursor:text}
         <div class="co"><div class="i"><span>Instagram</span><a href="https://instagram.com/agneltb667" target="_blank" rel="noopener">@agneltb667</a></div></div>
         <div class="co"><div class="i"><span>Location</span><strong>Dakar, Senegal</strong></div></div>
       </div>
-      <form id="projectForm" novalidate>
+      <form id="projectForm" novalidate><input type="checkbox" name="botcheck" id="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="row2">
           <div class="field"><label for="cName">Your name</label><input id="cName" name="name" autocomplete="name" placeholder="Awa Diop"></div>
           <div class="field"><label for="cEmail">Email address</label><input id="cEmail" name="email" type="email" autocomplete="email" placeholder="awa@business.sn"></div>
@@ -944,8 +944,9 @@ html.has-cursor input,html.has-cursor textarea{cursor:text}
     err.hidden=true;msg=LANG==='fr'?`Bonjour Abdourahmane,\n\nNom : ${n}\nE-mail : ${m}\nType de site : ${ty}\n\nProjet :\n${d}`:`Hello Abdourahmane,\n\nName: ${n}\nEmail: ${m}\nWebsite type: ${ty}\n\nProject:\n${d}`;
     document.getElementById('sendWa').href='https://wa.me/221777426240?text='+encodeURIComponent(msg);
     document.getElementById('sendMail').href='mailto:agneabdourahmane11@gmail.com?subject='+encodeURIComponent((LANG==='fr'?'Projet de site web — ':'Website project — ')+n)+'&body='+encodeURIComponent(msg);
+    if(document.getElementById('botcheck').checked)return;
     if(W3F_KEY){const btn=form.querySelector('button[type=submit]');btn.disabled=true;const old=btn.innerHTML;btn.textContent=T('Sending…');
-      try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:W3F_KEY,subject:(LANG==='fr'?'Projet de site web — ':'Website project — ')+n,from_name:'Portfolio',name:n,email:m,website_type:ty,message:d,botcheck:''})});
+      try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({access_key:W3F_KEY,subject:(LANG==='fr'?'Projet de site web — ':'Website project — ')+n,from_name:'Portfolio',name:n,email:m,website_type:ty,message:d,botcheck:document.getElementById('botcheck').checked})});
         const j=await r.json();if(j.success){form.reset();sent.hidden=false;res.hidden=true;btn.innerHTML=old;btn.disabled=false;return}throw 0}
       catch(_){btn.innerHTML=old;btn.disabled=false;err.textContent=T('The message could not be sent. Use WhatsApp or email below.');err.hidden=false}}
     res.hidden=false});
