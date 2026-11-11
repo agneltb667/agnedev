@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@theme {
+  --color-abyss: #03101a;
+  --color-deep: #062338;
+  --color-slate-arch: #1b2a35;
+  --color-tide: #7fd6e8;
+  --color-foam: #eef6f8;
+  --color-coral: #ff8a73;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scrollcue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+html,
+body {
+  background: var(--color-abyss);
+  color: var(--color-foam);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums;
+}
+
+body {
+  overflow-x: clip;
+}
+
+/* tracés SVG dessinés au scroll (pathLength = 1) */
+@layer base {
+  .draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+}
+
+::selection {
+  background: var(--color-tide);
+  color: var(--color-abyss);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
